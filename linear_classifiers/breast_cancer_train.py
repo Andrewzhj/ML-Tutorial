@@ -47,7 +47,9 @@ class CancerTrain(object):
         data = data.dropna(how='any')
         return data
 
-
+    '''
+        逻辑回归训练
+    '''
     def logisticTrain(self):
         data = self.getData()
         # 创建特征列表
@@ -70,7 +72,9 @@ class CancerTrain(object):
         print("Accuracy of LR Classifier: ", lr.score(x_test, y_test))
         print(classification_report(y_test, lr_y_predict, target_names=['Benign', 'Malignant']))
 
-
+    '''
+        随机梯度参数估计
+    '''
     def sgdcTrain(self):
         data = self.getData()
         # 创建特征列表
