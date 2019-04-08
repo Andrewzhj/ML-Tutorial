@@ -48,3 +48,16 @@ plt.plot(lx, ly, c='yellow')
 lr = LogisticRegression()
 lr.fit(df_train[['Clump Thickness', 'Cell Size']][:10], df_train['Type'][:10])
 print("Testing accuracy (10 training sample): ", (lr.score(df_test[['Clump Thickness', 'Cell Size']], df_test['Type'])))
+
+
+# 绘制训练后的分类曲线
+intercept = lr.intercept_
+coef = lr.coef_[0, : ]
+ly = (-intercept - lx * coef[0]) / coef[1]
+plt.plot(lx, ly, c='green')
+plt.scatter(df_test_negative['Clump Thickness'], df_test_negative['Cell Size'], marker='o', s=200, c='red')
+plt.scatter(df_test_positive['Clump Thickness'], df_test_positive['Cell Size'], marker='x', s=150, c='black')
+plt.xlabel("Clump Thickness")
+plt.ylabel('Cell Size')
+plt.show()
+
