@@ -41,10 +41,10 @@ intercept = np.random.random([1])
 coef = np.random.random([2])
 lx = np.arange(0, 12)
 ly = (-intercept - lx * coef[0]) / coef[1]
-plt.plot(lx, ly, c='yellow')
+# plt.plot(lx, ly, c='yellow')
 # plt.show()
 
-# 使用逻辑回归分类
+# 使用逻辑回归分类（使用前10条训练样本）
 lr = LogisticRegression()
 lr.fit(df_train[['Clump Thickness', 'Cell Size']][:10], df_train['Type'][:10])
 print("Testing accuracy (10 training sample): ", (lr.score(df_test[['Clump Thickness', 'Cell Size']], df_test['Type'])))
@@ -59,5 +59,22 @@ plt.scatter(df_test_negative['Clump Thickness'], df_test_negative['Cell Size'], 
 plt.scatter(df_test_positive['Clump Thickness'], df_test_positive['Cell Size'], marker='x', s=150, c='black')
 plt.xlabel("Clump Thickness")
 plt.ylabel('Cell Size')
-plt.show()
+# plt.show()
 
+
+# 使用逻辑回归分类（所有训练样本）
+lr = LogisticRegression()
+lr.fit(df_train[['Clump Thickness', 'Cell Size']], df_train['Type'])
+print("Testing accuracy (all training sample): ", (lr.score(df_test[['Clump Thickness', 'Cell Size']], df_test['Type'])))
+
+
+# 绘制训练后的分类曲线
+intercept = lr.intercept_
+coef = lr.coef_[0, : ]
+ly = (-intercept - lx * coef[0]) / coef[1]
+plt.plot(lx, ly, c='blue')
+plt.scatter(df_test_negative['Clump Thickness'], df_test_negative['Cell Size'], marker='o', s=200, c='red')
+plt.scatter(df_test_positive['Clump Thickness'], df_test_positive['Cell Size'], marker='x', s=150, c='black')
+plt.xlabel("Clump Thickness")
+plt.ylabel('Cell Size')
+plt.show()
