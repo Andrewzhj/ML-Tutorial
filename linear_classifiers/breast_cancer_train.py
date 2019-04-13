@@ -49,6 +49,7 @@ class CancerTrain(object):
 
     '''
         逻辑回归训练
+        精确计算逻辑回归参数
     '''
     def logisticTrain(self):
         data = self.getData()
@@ -74,6 +75,7 @@ class CancerTrain(object):
 
     '''
         随机梯度参数估计
+        采用梯度法估计参数
     '''
     def sgdcTrain(self):
         data = self.getData()
