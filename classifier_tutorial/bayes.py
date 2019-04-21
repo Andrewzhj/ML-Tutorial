@@ -4,7 +4,7 @@
 @contact: andrew_zhj@126.com
 @file: bayes.py
 @time: 4/21/19 9:38 PM
-@desc:
+@desc: 贝叶斯分类算法
 @note:
 '''
 
