@@ -16,7 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import classification_report
-
+from sklearn.svm import LinearSVC
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
@@ -91,8 +91,29 @@ class LogisticRegressionTrain(object):
         print("Accuracy of SGD Classifier: ", sgdc.score(x_test, y_test))
         print(classification_report(y_test, sgdc_y_predict, target_names=['Benign', 'Malignant']))
 
+    '''
+    支持向量机分类器
+    '''
+    def svc_train(self):
+        data = self.get_data()
+        # 创建特征列表
+        x_train, x_test, y_train, y_test = train_test_split(data[self.column_names[1:10]], data[self.column_names[10]],
+                                                            test_size=0.25, random_state=33)
+        print(y_train.value_counts())
+        print(y_test.value_counts())
+        print(data.shape)
+        ss = StandardScaler()
+        x_train = ss.fit_transform(x_train)
+        x_test = ss.transform(x_test)
+        lsvc = LinearSVC()
+        lsvc.fit(x_train, y_train)
+        y_predict = lsvc.predict(x_test)
+        print("The Accuracy of Liner SVC is", lsvc.score(x_test, y_test))
+        print(classification_report(y_test, y_predict))
+
 
 if __name__ == '__main__':
     cancerTrain = LogisticRegressionTrain()
     cancerTrain.logistic_train()
     cancerTrain.sgdc_train()
+    cancerTrain.svc_train()
