@@ -2,7 +2,7 @@
 '''
 @author: Andrewzhj
 @contact: andrew_zhj@126.com
-@file: breast_cancer_train.py
+@file: logistic_regression.py
 @time: 3/25/19 10:37 PM
 @desc:
 @note:
@@ -19,28 +19,28 @@ from sklearn.metrics import classification_report
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-# 良/恶性乳腺癌肿瘤数据训练
-class CancerTrain(object):
 
+# 良/恶性乳腺癌肿瘤数据训练
+class LogisticRegressionTrain(object):
     '''
         初始化数据地址
     '''
+
     def __init__(self):
         self.bathUrl = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/"
         self.dataFile = "breast-cancer-wisconsin.data"
+        self.column_names = ['Sample code number', 'Clump Thickness', 'Uniformity of Cell Size',
+            'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei',
+            'Blan Chromatin', 'Normal Nucleoli', 'Mitoses', 'Class']
 
     '''
         获取数据
     '''
-    def getData(self):
+
+    def get_data(self):
         url = self.bathUrl + self.dataFile
-        column_names = [
-            'Sample code number', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
-            'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei', 'Blan Chromatin', 'Normal Nucleoli',
-            'Mitoses', 'Class'
-        ]
         # 读取数据
-        data = pd.read_csv(url, names=column_names)
+        data = pd.read_csv(url, names=self.column_names)
         # 将?转换为标准缺失值
         data = data.replace(to_replace='?', value=np.nan)
         # 丢弃带有缺失值的数据
@@ -51,15 +51,11 @@ class CancerTrain(object):
         逻辑回归训练
         精确计算逻辑回归参数
     '''
-    def logisticTrain(self):
-        data = self.getData()
+
+    def logistic_train(self):
+        data = self.get_data()
         # 创建特征列表
-        column_names = [
-            'Sample code number', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
-            'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei', 'Blan Chromatin', 'Normal Nucleoli',
-            'Mitoses', 'Class'
-        ]
-        x_train, x_test, y_train, y_test = train_test_split(data[column_names[1:10]], data[column_names[10]],
+        x_train, x_test, y_train, y_test = train_test_split(data[self.column_names[1:10]], data[self.column_names[10]],
                                                             test_size=0.25, random_state=33)
         print(y_train.value_counts())
         print(y_test.value_counts())
@@ -77,15 +73,11 @@ class CancerTrain(object):
         随机梯度参数估计
         采用梯度法估计参数
     '''
-    def sgdcTrain(self):
-        data = self.getData()
+
+    def sgdc_train(self):
+        data = self.get_data()
         # 创建特征列表
-        column_names = [
-            'Sample code number', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
-            'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei', 'Blan Chromatin', 'Normal Nucleoli',
-            'Mitoses', 'Class'
-        ]
-        x_train, x_test, y_train, y_test = train_test_split(data[column_names[1:10]], data[column_names[10]],
+        x_train, x_test, y_train, y_test = train_test_split(data[self.column_names[1:10]], data[self.column_names[10]],
                                                             test_size=0.25, random_state=33)
         print(y_train.value_counts())
         print(y_test.value_counts())
@@ -99,7 +91,8 @@ class CancerTrain(object):
         print("Accuracy of SGD Classifier: ", sgdc.score(x_test, y_test))
         print(classification_report(y_test, sgdc_y_predict, target_names=['Benign', 'Malignant']))
 
+
 if __name__ == '__main__':
-    cancerTrain = CancerTrain()
-    cancerTrain.logisticTrain()
-    cancerTrain.sgdcTrain()
+    cancerTrain = LogisticRegressionTrain()
+    cancerTrain.logistic_train()
+    cancerTrain.sgdc_train()
