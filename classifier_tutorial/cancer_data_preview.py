@@ -2,7 +2,7 @@
 '''
 @author: Andrewzhj
 @contact: andrew_zhj@126.com
-@file: preview.py
+@file: cancer_data_preview.py
 @time: 4/7/19 3:55 PM
 @desc:
 @note:

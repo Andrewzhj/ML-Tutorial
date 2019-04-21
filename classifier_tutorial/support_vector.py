@@ -2,7 +2,7 @@
 '''
 @author: Andrewzhj
 @contact: andrew_zhj@126.com
-@file: support_voctor_classifier.py
+@file: support_vector.py
 @time: 4/21/19 11:58 AM
 @desc:
 @note:
