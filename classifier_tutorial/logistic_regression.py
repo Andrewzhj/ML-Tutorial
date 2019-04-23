@@ -17,6 +17,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import classification_report
 from sklearn.svm import LinearSVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.feature_extraction import DictVectorizer
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
@@ -111,9 +113,28 @@ class LogisticRegressionTrain(object):
         print("The Accuracy of Liner SVC is", lsvc.score(x_test, y_test))
         print(classification_report(y_test, y_predict))
 
+    def decision_tree_train(self):
+        data = self.get_data()
+        # 创建特征列表
+        x_train, x_test, y_train, y_test = train_test_split(data[self.column_names[1:10]], data[self.column_names[10]],
+                                                            test_size=0.25, random_state=33)
+        print(y_train.value_counts())
+        print(y_test.value_counts())
+        print(data.shape)
+        vec = DictVectorizer(sparse=False)
+        x_train = vec.fit_transform(x_train.to_dict(orient='record'))
+        print(vec.feature_names_)
+        x_test = vec.transform(x_test.to_dict(orient='record'))
+        dtc = DecisionTreeClassifier()
+        dtc.fit(x_train, y_train)
+        y_predict = dtc.predict(x_test)
+        print("The Accuracy of decision tree is ", dtc.score(x_test, y_test))
+        print(classification_report(y_test, y_predict))
+
 
 if __name__ == '__main__':
     cancerTrain = LogisticRegressionTrain()
-    cancerTrain.logistic_train()
-    cancerTrain.sgdc_train()
-    cancerTrain.svc_train()
+    # cancerTrain.logistic_train()
+    # cancerTrain.sgdc_train()
+    # cancerTrain.svc_train()
+    cancerTrain.decision_tree_train()
