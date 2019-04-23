@@ -4,7 +4,7 @@
 @contact: andrew_zhj@126.com
 @file: logistic_regression.py
 @time: 3/25/19 10:37 PM
-@desc:
+@desc:  良/恶性乳腺癌肿瘤数据训练
 @note:
 '''
 
@@ -113,6 +113,9 @@ class LogisticRegressionTrain(object):
         print("The Accuracy of Liner SVC is", lsvc.score(x_test, y_test))
         print(classification_report(y_test, y_predict))
 
+    '''
+    决策树模型，不需要线性假设
+    '''
     def decision_tree_train(self):
         data = self.get_data()
         # 创建特征列表
@@ -134,7 +137,7 @@ class LogisticRegressionTrain(object):
 
 if __name__ == '__main__':
     cancerTrain = LogisticRegressionTrain()
-    # cancerTrain.logistic_train()
-    # cancerTrain.sgdc_train()
-    # cancerTrain.svc_train()
+    cancerTrain.logistic_train()
+    cancerTrain.sgdc_train()
+    cancerTrain.svc_train()
     cancerTrain.decision_tree_train()
